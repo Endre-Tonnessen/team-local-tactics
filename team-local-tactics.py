@@ -5,7 +5,6 @@ from rich.table import Table
 from champlistloader import load_some_champs
 from core import Champion, Match, Shape, Team
 
-
 def print_available_champs(champions: dict[Champion]) -> None:
 
     # Create a table containing available champions
