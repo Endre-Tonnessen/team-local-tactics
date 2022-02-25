@@ -1,11 +1,8 @@
 # team-local-tactics
 A game for the mandatory assignment
 
-SetUpstream
-
-
-
-
+Members:
+ - Endre Sølvberg Tønnessen
 
 
 
