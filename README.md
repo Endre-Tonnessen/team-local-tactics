@@ -5,7 +5,9 @@ Members:
  - Endre Sølvberg Tønnessen
 
 
+## Starup
 
+Run program from the top level ``main.py``.
 
 
 
