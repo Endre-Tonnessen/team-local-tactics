@@ -1,10 +1,15 @@
 from __future__ import annotations
-import pickle
+import sys
+from ast import Str
 from typing import List
 from .databaseHandler import databaseHandler
 from socket import socket, AF_INET, SOCK_STREAM
 from rich import print
-import sys
+from ..Game.teamlocaltactics import print_match_summary
+from ..Game.teamlocaltactics import Match
+from ..Game.core import *
+from ..Game.teamlocaltactics import Team
+from ..Game.champlistloader import _clientParseChamp
 
 class TNTServer:
     space = "[cyan]  -->  [/cyan]"
@@ -32,53 +37,62 @@ class TNTServer:
         #self.sendAll("[bright_yellow] Starting game! [/bright_yellow]")
         self.sendAll("Start")
         
-        sys.stdin.readline()
-
         # Send Champion list to players      
         self.sendAll(str(champions))
         
         print(TNTServer.space, "[cyan]Starting game![/cyan]")
 
-        """ 
-        ITS RACE CONDITIONS
-        
-        FIGURE OUT THREAD SHIT
-        
-        """
-
-
-        #THIS SHIT WACK YO
-        #self.pickChampion()
+        self.pickChampion()
 
         # Simulate
+        champs = _clientParseChamp(champions)
+        match = Match(
+            Team([champs[name] for name in self.player1]),
+            Team([champs[name] for name in self.player2])
+        )
+        match.play()
         
         # Send results
-        
-        sys.stdin.readline()
-        
+        matchSummary: Str = print_match_summary(match)
+        self.sendAll(matchSummary)
+
+        exit()
+
         
     def pickChampion(self):
         # Get Player picks
-        self.sendAll("Pick your champion!")
-        player1: List[str] = []
-        player2: List[str] = []
-        
-        for i in range(1):
+        #self.sendAll("\n [blue] Pick your champion! [/blue] \n")
+        self.player1: List[str] = []
+        self.player2: List[str] = []
+        p1: socket = self.players[0]
+        p2: socket = self.players[1]
+            
+        for i in range(2):
             # Player 1
-            p1: socket = self.players[0]
             d1 = {
                 "player": "Player1",
                 "color": "red",
-                "Player1": player1,
-                "player2": player2
+                "Player1": self.player1,
+                "Player2": self.player2
             }
-            p1.send(str(d1).encode())
-            championChoosen: str = self.sock.recv(4096).decode()
-            player1.append(championChoosen)
-            sys.stdin.readline()
+            p1.send(str(d1).encode())        
+            championChoosen: str = p1.recv(4096).decode()
+            print(f"{TNTServer.space} [cyan] Player 1 choose {championChoosen} [cyan]")
+            self.player1.append(championChoosen)
+            p2.send(f"OppositePlayer:red:Player1:{championChoosen}".encode())
             
             # Player 2
-
+            d2 = {
+                "player": "Player2",
+                "color": "blue",
+                "Player1": self.player2,
+                "Player2": self.player1
+            }
+            p2.send(str(d2).encode())
+            championChoosen: str = p2.recv(4096).decode()
+            print(f"{TNTServer.space} [cyan] Player 2 choose {championChoosen} [cyan]")
+            self.player2.append(championChoosen)
+            p1.send(f"OppositePlayer:blue:Player2:{championChoosen}".encode())
 
     def waitForPlayers(self, amount: int):
         """ Server waits until {amount} of players has joined. """
@@ -96,11 +110,6 @@ class TNTServer:
     def sendAll(self, msg: str):
         for player in self.players:
             player.send(msg.encode())
-
-
-
-
-
 
 
 

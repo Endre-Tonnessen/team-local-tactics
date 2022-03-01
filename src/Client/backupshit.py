@@ -1,5 +1,7 @@
+from queue import Queue
 import sys
-from socket import socket, AF_INET, SOCK_STREAM
+from socket import socket, AF_INET, SOCK_STREAM, timeout
+from threading import Thread
 from typing import Dict, List
 from rich import print
 from rich.prompt import Prompt
@@ -9,6 +11,10 @@ from ..Game.core import Champion
 
 class TNTClient:
     def __init__(self) -> None:
+        self._messages = Queue()
+        self._buffer_size = 2048
+        Thread(target=self._recv).start()
+        
         self.sock = socket(AF_INET, SOCK_STREAM)
         self.sock.connect(("localhost", 12000))
    
@@ -20,7 +26,6 @@ class TNTClient:
         #THIS SHIT WACK YO
         #self.chooseChampion() 
         sys.stdin.readline()
-        
         
     def waitForPlayers(self):
         """ Waits for all players to join """
