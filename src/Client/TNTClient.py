@@ -61,6 +61,9 @@ class TNTClient:
         return champions
         
     def _recv(self):
+        """ 
+            Source: From the provided chat-tutorial folder at mitt uib.
+        """
         while self._receiving:
             try:
                 data = self.sock.recv(2048)
