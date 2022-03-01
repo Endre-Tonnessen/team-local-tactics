@@ -29,7 +29,7 @@ For local lan, start one as a ``server``, and two as `clients`.
 The server will on startup attempt to retrieve the champions from the MongoDB database. This is done in `mongoDB.py` and `databaseHandler.py` in the `Server` folder.
 
 If you don't have a `.env` file, you can create one and fill it with the details under
-
+(Alternatively replace the provided `.env.example`)
 ```py
 # Development settings
 mongoUsername="username for mongoDB"
@@ -37,7 +37,7 @@ password="password for user"
 clusterName="name of your cluster"
 ```
 
-Then on line `26` in `TNTServer.py`, uncomment `db.insertChampions()` to repopulate the database with some basic champions. 
+Then on line `26` in `TNTServer.py`, uncomment `db.insertChampions()` to repopulate the empty database with some basic champions. 
 
 
 
