@@ -1,3 +1,4 @@
+from __future__ import annotations
 from queue import Empty, Queue
 from socket import socket, AF_INET, SOCK_STREAM, timeout
 from threading import Thread
@@ -12,7 +13,7 @@ from ..Game.champlistloader import _clientParseChamp
 from ..Game.core import Champion
 
 class TNTClient:
-    def __init__(self) -> None:
+    def __init__(self) -> TNTClient:
         self._messages = Queue()
         self._receiving = True
         self._buffer_size = 2048
@@ -60,7 +61,6 @@ class TNTClient:
         return champions
         
     def _recv(self):
-        """ Waits for 1 message """
         while self._receiving:
             try:
                 data = self.sock.recv(2048)

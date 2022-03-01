@@ -7,7 +7,7 @@ from src.Server.TNTServer import TNTServer
 from src.Client.TNTClient import TNTClient
 
 print('\n'
-        'Welcome to the [bold green]startup[/bold green] guide for [bold yellow]Team Local Tactics[/bold yellow]!'
+        'Welcome to the [bold green]startup[/bold green] menu for [bold yellow]Team Local Tactics[/bold yellow]!'
         '\n'
         'Please choose how to proceed:'
         '\n')
