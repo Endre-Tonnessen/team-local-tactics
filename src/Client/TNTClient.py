@@ -5,6 +5,7 @@ from typing import Dict, List
 import ast
 from rich import print
 from rich.prompt import Prompt
+from rich.console import Console
 from ..Game.teamlocaltactics import print_available_champs
 from ..Game.teamlocaltactics import print_match_summary
 from ..Game.champlistloader import _clientParseChamp
@@ -31,7 +32,8 @@ class TNTClient:
         self.chooseChampion()
          
         match = self._messages.get() # Match result
-        print(match)
+        console = Console()
+        console.print(match)
         
         # Shutdown
         self._receiving = False
