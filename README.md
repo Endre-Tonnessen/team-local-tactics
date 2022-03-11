@@ -4,7 +4,12 @@ A game for the mandatory assignment
 Members:
  - Endre Sølvberg Tønnessen
 
-## Technical details for assignment
+## Features
+  - Singleplayer
+  - Local multiplayer, 1 server and 2 clients.
+  - Supports storing champion data in mongoDB.
+
+## Details for assignment
 
 ### Setup
 
