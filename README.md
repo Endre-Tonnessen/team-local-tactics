@@ -51,7 +51,11 @@ The server will on startup attempt to retrieve the champions from the MongoDB da
 
 Should this fail for any reason, it will load champ data from the local .txt file. Allowing the game to continue.
 
+## Errors to look out for
+Incase the both server and clients start, and connect correctly. But the hero list is ``empty`` in the clients, this means the server has succesfully connected to the mongoDB, but retrieved an empty result for the hero data. This possibly means that there is no data in the database.
 
+### Database
+Should the database for some reason be difficult to setup (it works for me), you can always provide a wrong DB config. It will fail to connect, and then automatically fallback to the local `.txt` with the champion data. 
 
 
 
