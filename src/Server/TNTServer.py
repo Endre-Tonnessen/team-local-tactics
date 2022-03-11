@@ -95,7 +95,7 @@ class TNTServer:
             }
             p1.send(str(d1).encode())        
             championChoosen: str = p1.recv(4096).decode()
-            print(f"{TNTServer.space} [cyan]    Player 1 choose {championChoosen} [cyan]")
+            print(f"{TNTServer.space} [cyan] Player 1 choose {championChoosen} [cyan]")
             self.player1.append(championChoosen)
             p2.send(f"OppositePlayer:red:Player1:{championChoosen}".encode())
             
