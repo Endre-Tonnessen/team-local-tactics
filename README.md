@@ -1,6 +1,8 @@
 # team-local-tactics
 A game for the mandatory assignment
 
+Group 20
+
 Members:
  - Endre Sølvberg Tønnessen
 
