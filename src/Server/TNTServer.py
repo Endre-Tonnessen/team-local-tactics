@@ -1,6 +1,6 @@
 from __future__ import annotations
 from ast import Str
-from typing import List
+from typing import Dict, List
 from .databaseHandler import databaseHandler
 from socket import socket, AF_INET, SOCK_STREAM
 from rich import print
@@ -9,6 +9,7 @@ from ..Game.teamlocaltactics import Match
 from ..Game.core import *
 from ..Game.teamlocaltactics import Team
 from ..Game.champlistloader import _clientParseChamp
+from ..Game.champlistloader import load_some_champs
 
 class TNTServer:
     space = "[cyan]  -->  [/cyan]"
@@ -20,12 +21,21 @@ class TNTServer:
         self.sock.bind(("localhost", 12000))
         self.sock.listen(2)
         
-        # Get Champion data from database
-        print(f"{TNTServer.space}[cyan] Attempting to retrieve champions. [/cyan]")
-        db = databaseHandler()
-        #db.insertChampions() # Uncomment to populate the mongoDB
-        champions = db.getChampions()
-        print(f"{TNTServer.space}[cyan] Successfully retrieved champions. [/cyan]\n")
+        try:
+            # Get Champion data from database
+            print(f"{TNTServer.space}[cyan] Attempting to retrieve champions from MongoDB. [/cyan]")
+            db = databaseHandler()
+            #db.insertChampions() # Uncomment to populate the mongoDB
+            champions = db.getChampions()
+            print(f"{TNTServer.space}[cyan] Successfully retrieved champions. [/cyan]\n")
+        except Exception as e:
+            # Should server fail to get data from MongoDB, revert to local backup. 
+            print(f"{TNTServer.space}[red] Failed to retrieve champions from MongoDB. [/red]")
+            print(f"{TNTServer.space}[red] Have you correctly set up the config? [/red]")
+            print(f"{TNTServer.space}[red] Error is: [/red]", e, "\n")
+            print(f"{TNTServer.space}[yellow] Reverting to champion data in local txt file. [/yellow]")
+            print(f"{TNTServer.space}[yellow] Game should proceed as normal. [/yellow]")
+            champions: List[Dict[str, str]] = self.parseToListOfDict(load_some_champs())
         
         # Get all players
         print(f"{TNTServer.space}[cyan] Waiting for players. [/cyan]")
@@ -56,7 +66,18 @@ class TNTServer:
 
         exit()
 
+    def parseToListOfDict(self, arg: Dict[str, Champion]) -> List[Dict[str,str]]:
+        champs = []
+        for champ in arg.values():
+            di = dict()
+            di['name'] = champ._name
+            di['rock'] = champ._rock
+            di['paper'] = champ._paper
+            di['scissors'] = champ._scissors
+            champs.append(di)
+        return champs
         
+    
     def pickChampion(self):
         # Get Player picks
         #self.sendAll("\n [blue] Pick your champion! [/blue] \n")

@@ -30,7 +30,7 @@ class mongoDB:
     docu = self.database.champions
     champ = []
     for data in docu.find({},{"_id":0}):
-      champ.append(data)
+      champ.append(data)      
     return champ
 
   def insert(self, championsDocument):

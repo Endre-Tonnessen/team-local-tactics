@@ -20,7 +20,7 @@ def from_csv(filename: str) -> dict[str, Champion]:
 def load_some_champs():
     return from_csv('src/Game/some_champs.txt')
 
-# -----
+
 def _clientParseChamp(champs: List[Dict[str, str]]) -> Dict[Champion]:
     champions: Dict[str, Champion] = dict()
     for champ in champs:

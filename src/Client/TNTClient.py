@@ -8,7 +8,6 @@ from rich import print
 from rich.prompt import Prompt
 from rich.console import Console
 from ..Game.teamlocaltactics import print_available_champs
-from ..Game.teamlocaltactics import print_match_summary
 from ..Game.champlistloader import _clientParseChamp
 from ..Game.core import Champion
 
