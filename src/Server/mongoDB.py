@@ -25,6 +25,10 @@ class mongoDB:
     except Exception as e:
       print(e)
       print("Database connection failed.")
+
+  def deleteChampionData(self):
+    """ Clears all data from database """
+    self.database.champions.delete_many({})
       
   def retrieveData(self) -> List[Dict[str,str]]:
     docu = self.database.champions

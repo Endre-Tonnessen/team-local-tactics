@@ -13,6 +13,11 @@ class databaseHandler:
         champions = self.conn.retrieveData()
         return champions        
     
+    def deleteChampionData(self):
+        """ Deletes all database data. """
+        self.conn.deleteChampionData()
+
+    
     def insertChampions(self):
         """ Inserts champion data from 'some_champs.txt' into the database """
         data = load_some_champs()

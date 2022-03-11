@@ -25,7 +25,6 @@ class TNTServer:
             # Get Champion data from database
             print(f"{TNTServer.space}[cyan] Attempting to retrieve champions from MongoDB. [/cyan]")
             db = databaseHandler()
-            #db.insertChampions() # Uncomment to populate the mongoDB
             champions = db.getChampions()
             print(f"{TNTServer.space}[cyan] Successfully retrieved champions. [/cyan]\n")
         except Exception as e:
