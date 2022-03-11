@@ -45,7 +45,6 @@ while lo:
             except Exception as e:
                 print("[red] An error was raised when inserting champions into MongoDB database.   [/red]")
                 print("[red] It is recommended to manually check if the data was correctly added.  [/red]")
-
            
         case _: print("[orange1]Not a valid option. [/orange1]")
  
